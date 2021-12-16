@@ -14,6 +14,11 @@ ADDR2 = (HOST, 8000)
 
 class Client:
     last_msg_id = -1
+    PROTOCOL: int
+
+    def __init__(self, protocol):
+        self.PROTOCOL = protocol
+
 
     def send_request(self, request) -> str:
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -55,7 +60,7 @@ class Client:
                 self.print_to_console(str(message_update))
 
     def date(self) -> str:
-        return datetime.strftime(datetime.now(), "%d-%m-%Y %T:%M%p")
+        return datetime.strftime(datetime.now(), "%d-%m-%Y %H %M %p")
 
     def start(self):
         print('Hello, stranger. Please, enter your nickname and start chatting now!')
@@ -74,4 +79,5 @@ class Client:
 
 
 if __name__ == '__main__':
-    Client().start()
+    #Client(socket.SOCK_STREAM).start()  # tcp
+    Client(socket.SOCK_DGRAM).start()   # udp
